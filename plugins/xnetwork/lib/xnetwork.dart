@@ -18,6 +18,7 @@ class Node {
   int port = 0;
   String scheme = "";
   String url = "";
+  String remark = "";
 }
 
 class Xnetwork {
@@ -70,6 +71,7 @@ class Xnetwork {
       node.port = jsonMap["server_port"];
       node.scheme = jsonMap["type"];
       node.url = url;
+      node.remark = jsonMap["remark"];
 
       return node;
     } catch (exception) {
