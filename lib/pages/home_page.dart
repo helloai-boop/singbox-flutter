@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:xnetwork/xnetwork.dart';
 import '../models/server_model.dart';
 import '../widgets/connection_card.dart';
@@ -17,6 +18,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool _isConnected = false;
   String _connectionStatus = 'Disconnected';
+  late TextEditingController _configController;
 
   // Mock data
   final List<ServerModel> _servers = [
@@ -54,6 +56,13 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    _configController = TextEditingController(text: _vlessConfig);
+  }
+
+  @override
+  void dispose() {
+    _configController.dispose();
+    super.dispose();
   }
 
   Future<void> _toggleConnection() async {
@@ -69,7 +78,7 @@ class _HomePageState extends State<HomePage> {
       // The user request didn't provide dynamic config generation logic, so I'll use the one from main.dart
       // But to make it realistic, I'll pretend we are using the selected server.
 
-      var ok = await Xnetwork.start(_vlessConfig, true);
+      var ok = await Xnetwork.start(_configController.text, true);
       debugPrint("start $ok");
       setState(() {
         _isConnected = true;
@@ -95,7 +104,7 @@ class _HomePageState extends State<HomePage> {
         //   onPressed: () {},
         // ),
         title: const Text(
-          'Sing-Box',
+          'sing-box',
           style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -114,37 +123,54 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
-          // Top Config Area (Mock)
+          // Top Config Area (Input)
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 16),
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: Colors.grey.withOpacity(0.3),
+                color: Colors.white.withOpacity(0.3),
                 style: BorderStyle.solid,
-              ), // Dashed in design
+              ),
             ),
-            child: Row(
+            child: Stack(
+              alignment: AlignmentGeometry.bottomRight,
               children: [
-                Expanded(
-                  child: Text(
-                    _vlessConfig,
+                SizedBox(
+                  height: 88,
+                  child: TextField(
+                    controller: _configController,
                     maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(color: Colors.grey, fontSize: 12),
+                    minLines: 1,
+                    style: const TextStyle(color: Colors.black87, fontSize: 12),
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Enter url here...',
+                      hintStyle: TextStyle(color: Colors.grey),
+                    ),
                   ),
                 ),
                 Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.delete_outline, color: Colors.red),
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.copy, color: Colors.blue),
-                      onPressed: () {},
+                      icon: const Icon(Icons.save, color: Colors.blue),
+                      onPressed: () async {
+                        await Clipboard.setData(
+                          ClipboardData(text: _configController.text),
+                        );
+                        if (mounted) {
+                          // ignore: use_build_context_synchronously
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Copied to clipboard'),
+                              duration: Duration(seconds: 1),
+                            ),
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),
@@ -166,7 +192,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 14),
 
           // Connect Button
           Padding(
@@ -177,7 +203,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 14),
 
           // Server List
           Expanded(
@@ -198,10 +224,6 @@ class _HomePageState extends State<HomePage> {
                     server: server,
                     onTap: () {
                       setState(() {
-                        for (var s in _servers) {
-                          // s.isSelected = (s.id == server.id); // Cannot assign to final
-                          // Need to replace in list
-                        }
                         // Simple toggle for demo
                         final newServers = _servers
                             .map(

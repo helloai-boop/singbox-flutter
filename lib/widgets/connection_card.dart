@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 
 class ConnectionCard extends StatelessWidget {
@@ -31,15 +33,25 @@ class ConnectionCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
+      child: Stack(
+        alignment: AlignmentGeometry.bottomRight,
         children: [
-          _buildRow('Remark:', remark, isBold: true, trailing: const Icon(Icons.bar_chart, color: Colors.blue)),
-          const SizedBox(height: 8),
-          _buildRow('Address:', address),
-          const SizedBox(height: 8),
-          _buildRow('Port:', port),
-          const SizedBox(height: 8),
-          _buildRow('Status:', status, color: status == 'Connected' ? Colors.green : Colors.grey),
+          Column(
+            children: [
+              _buildRow('Remark:', remark, isBold: true),
+              const SizedBox(height: 8),
+              _buildRow('Address:', address),
+              const SizedBox(height: 8),
+              _buildRow('Port:', port),
+              const SizedBox(height: 8),
+              _buildRow(
+                'Status:',
+                status,
+                color: status == 'Connected' ? Colors.green : Colors.grey,
+              ),
+            ],
+          ),
+
           Align(
             alignment: Alignment.centerRight,
             child: Text(
@@ -57,21 +69,27 @@ class ConnectionCard extends StatelessWidget {
     );
   }
 
-  Widget _buildRow(String label, String value, {bool isBold = false, Color? color, Widget? trailing}) {
+  Widget _buildRow(
+    String label,
+    String value, {
+    bool isBold = false,
+    Color? color,
+    Widget? trailing,
+  }) {
     return Row(
       children: [
         SizedBox(
           width: 80,
           child: Text(
             label,
-            style: const TextStyle(color: Colors.grey, fontSize: 16),
+            style: const TextStyle(color: Colors.grey, fontSize: 15),
           ),
         ),
         Expanded(
           child: Text(
             value,
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
               color: color ?? Colors.black87,
             ),

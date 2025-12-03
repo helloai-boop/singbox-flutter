@@ -63,9 +63,11 @@ class _ConnectButtonState extends State<ConnectButton> {
     return GestureDetector(
       onTap: widget.onPressed,
       child: Container(
-        height: 60,
+        height: 50,
         decoration: BoxDecoration(
-          color: widget.isConnected ? const Color(0xFF27AE60) : Colors.grey[300],
+          color: widget.isConnected
+              ? const Color(0xFF27AE60)
+              : Colors.grey[300],
           borderRadius: BorderRadius.circular(30),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -81,14 +83,14 @@ class _ConnectButtonState extends State<ConnectButton> {
               child: Icon(
                 widget.isConnected ? Icons.lock : Icons.lock_open,
                 color: Colors.black,
-                size: 20,
+                size: 16,
               ),
             ),
             Text(
               widget.isConnected ? 'Connected' : 'Tap to Connect',
               style: TextStyle(
                 color: widget.isConnected ? Colors.white : Colors.black54,
-                fontSize: 18,
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -96,7 +98,7 @@ class _ConnectButtonState extends State<ConnectButton> {
               widget.isConnected ? _formatTime(_seconds) : '',
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: 18,
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),
             ),
