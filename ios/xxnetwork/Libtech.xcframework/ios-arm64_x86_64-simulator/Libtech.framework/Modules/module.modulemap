@@ -1,0 +1,8 @@
+framework module "Libtech" {
+	header "ref.h"
+    header "Libtech.objc.h"
+    header "Universe.objc.h"
+    header "Libtech.h"
+
+    export *
+}

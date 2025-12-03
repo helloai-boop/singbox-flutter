@@ -1,0 +1,45 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "ext_vpn",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "ext_vpn (profile mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "ext_vpn (release mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    },
+    {
+      "name": "xnetwork",
+      "cwd": "plugins\\xnetwork",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "xnetwork (profile mode)",
+      "cwd": "plugins\\xnetwork",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "xnetwork (release mode)",
+      "cwd": "plugins\\xnetwork",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    }
+  ]
+}

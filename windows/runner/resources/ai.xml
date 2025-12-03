@@ -1,0 +1,149 @@
+{
+    "log": {
+        "level": "info",
+        "output": "box.log"
+    },
+    "dns": {
+        "servers": [
+            {
+                "tag": "dns_proxy",
+                "address": "tcp://8.8.8.8",
+                "address_strategy": "prefer_ipv4",
+                "strategy": "prefer_ipv4",
+                "detour": "proxy"
+            },
+            {
+                "tag": "dns_local",
+                "address": "114.114.114.114",
+                "address_strategy": "prefer_ipv4",
+                "strategy": "prefer_ipv4",
+                "detour": "direct"
+            },
+            {
+                "tag": "dns_common",
+                "address": "https://223.5.5.5/dns-query",
+                "address_strategy": "prefer_ipv4",
+                "strategy": "prefer_ipv4",
+                "detour": "direct"
+            },
+            {
+                "tag": "dns_block",
+                "address": "rcode://refused"
+            }
+        ],
+        "rules": [
+            {
+                "rule_set": "geosite-cn",
+                "server": "dns_local",
+                "rewrite_ttl": 900
+            },
+            {
+                "rule_set": "geosite-geolocation-!cn",
+                "server": "dns_proxy",
+                "rewrite_ttl": 900
+            },
+            {
+                "outbound": "any",
+                "server": "dns_local"
+            }
+        ],
+        "final": "dns_local",
+        "strategy": "prefer_ipv4"
+    },
+    "inbounds": [
+        {
+            "type": "tun",
+            "tag": "tun-in",
+            "interface_name": "utun12",
+            "mtu": 9000,
+            "auto_route": true,
+            "strict_route": true,
+            "stack": "gvisor",
+            "sniff": true,
+            "inet4_address": "172.19.0.1/30"
+        }
+    ],
+    "outbounds": [
+        {
+            "alter_id": 2,
+            "security": "none",
+            "server": "120.240.167.132",
+            "server_port": 30007,
+            "tag": "proxy",
+            "tls": {
+                "enabled": true,
+                "insecure": true,
+                "server_name": "andromedae.weltknoten.xyz"
+            },
+            "type": "vmess",
+            "uuid": "1e963efa-c099-3a7d-bf47-64db4ea46c8e"
+        },
+        {
+            "type": "direct",
+            "tag": "direct"
+        },
+        {
+            "type": "block",
+            "tag": "block"
+        },
+        {
+            "type": "dns",
+            "tag": "dns_out"
+        }
+    ],
+    "route": {
+        "rules": [
+            {
+                "protocol": "dns",
+                "outbound": "dns_out"
+            },
+            {
+                "protocol": "quic",
+                "outbound": "block"
+            },
+            {
+                "type": "logical",
+                "mode": "and",
+                "rules": [
+                    {
+                        "rule_set": "geoip-cn",
+                        "invert": true
+                    },
+                    {
+                        "rule_set": "geosite-geolocation-!cn"
+                    }
+                ],
+                "outbound": "proxy"
+            },
+            {
+                "rule_set": "geoip-cn",
+                "outbound": "direct"
+            },
+            {
+                "ip_is_private": true,
+                "outbound": "direct"
+            }
+        ],
+        "rule_set": [
+            {
+                "type": "local",
+                "tag": "geosite-geolocation-!cn",
+                "format": "binary",
+                "path": "geosite-geolocation-!cn.srs"
+            },
+            {
+                "type": "local",
+                "tag": "geosite-cn",
+                "format": "binary",
+                "path": "geosite-cn.srs"
+            },
+            {
+                "type": "local",
+                "tag": "geoip-cn",
+                "format": "binary",
+                "path": "geoip-cn.srs"
+            }
+        ],
+        "auto_detect_interface": true
+    }
+}
