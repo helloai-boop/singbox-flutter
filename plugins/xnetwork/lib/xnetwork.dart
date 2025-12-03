@@ -5,12 +5,20 @@
 // platforms in the `pubspec.yaml` at
 // https://flutter.dev/to/pubspec-plugin-platforms.
 
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 
 import 'xnetwork_platform_interface.dart';
 import 'dart:io';
+
+class Node {
+  String address = "";
+  int port = 0;
+  String scheme = "";
+  String url = "";
+}
 
 class Xnetwork {
   static Future<String?> getPlatformVersion() {
@@ -43,6 +51,31 @@ class Xnetwork {
 
   static debug(Object? object) {
     debugPrint("$object");
+  }
+
+  static Future<Node?> parse(String url) async {
+    var json = "";
+    if (Platform.isWindows) {
+      json = await parseWindows(url);
+    } else if (Platform.isMacOS) {
+      json = await parseMac(url);
+    }
+    try {
+      Map<String, dynamic> jsonMap = jsonDecode(json);
+
+      debugPrint("json:$json");
+
+      var node = Node();
+      node.address = jsonMap["server"];
+      node.port = jsonMap["server_port"];
+      node.scheme = jsonMap["type"];
+      node.url = url;
+
+      return node;
+    } catch (exception) {
+      debugPrint("parse error: $json");
+    }
+    return null;
   }
 
   static Future<bool> stop() async {
@@ -91,15 +124,27 @@ class Xnetwork {
     //   includeParentEnvironment: true
     // );
 
-      // 使用 shell 执行
+    // 使用 shell 执行
     final arguments = ['run', '-D', exeDir, "-u", url, "-g", "$isGlobalMode"];
     await Process.run(
       'powershell',
-      [ '-NoProfile',
+      [
+        '-NoProfile',
         '-NonInteractive',
-        '-WindowStyle', 'Hidden',  '-Command', 'Start-Process', '-FilePath', '\'$singBoxPath\'', 
-      '-ArgumentList', '\'${arguments.join(' ')}\'', '-WindowStyle', 'Hidden',
-    '-PassThru', '|', 'Out-Null'], // 如果需要管理员权限
+        '-WindowStyle',
+        'Hidden',
+        '-Command',
+        'Start-Process',
+        '-FilePath',
+        '\'$singBoxPath\'',
+        '-ArgumentList',
+        '\'${arguments.join(' ')}\'',
+        '-WindowStyle',
+        'Hidden',
+        '-PassThru',
+        '|',
+        'Out-Null',
+      ], // 如果需要管理员权限
       runInShell: false,
     );
 
@@ -153,5 +198,59 @@ class Xnetwork {
     process.stdout.transform(const Utf8Decoder()).listen(debug);
     process.stderr.transform(const Utf8Decoder()).listen(debug);
     return true;
+  }
+
+  static Future<String> parseMac(String url) async {
+    final singBoxPath = '/Library/Application Support/xxnetwork/xxnetwork';
+    final process = await Process.start(
+      singBoxPath,
+      ['parse', "-u", url], // 示例参数
+      runInShell: true,
+    );
+    final completer = Completer<String>();
+    process.stdout
+        .transform(const Utf8Decoder())
+        .listen(
+          (json) {
+            completer.complete(json);
+          },
+          onError: (e) {
+            completer.complete("");
+          },
+        );
+    process.stderr
+        .transform(const Utf8Decoder())
+        .listen(
+          (json) {
+            completer.complete(json);
+          },
+          onError: (e) {
+            completer.complete("");
+          },
+        );
+    return await completer.future;
+  }
+
+  static Future<String> parseWindows(String url) async {
+    final exeDir = File(Platform.resolvedExecutable).parent.path;
+    final singBoxPath = '$exeDir/singbox.exe';
+    final process = await Process.start(
+      singBoxPath,
+      ['parse', "-u", url], // 示例参数
+      runInShell: true,
+    );
+    final completer = Completer<String>();
+    process.stdout.transform(const Utf8Decoder()).listen(debug);
+    process.stderr
+        .transform(const Utf8Decoder())
+        .listen(
+          (json) {
+            completer.complete(json);
+          },
+          onError: (e) {
+            completer.complete("");
+          },
+        );
+    return await completer.future;
   }
 }

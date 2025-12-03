@@ -24,14 +24,7 @@
 		0B807FE8416B84CCC74FD329 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3648E28D62AEE35BF1DC5BE /* Pods_Runner.framework */; };
 		177B32582EDD2CBF00ACFA36 /* xxnetwork in Resources */ = {isa = PBXBuildFile; fileRef = 177B32572EDD2CBF00ACFA36 /* xxnetwork */; };
 		177B32592EDD2CCD00ACFA36 /* xxnetwork in Copy Plugins */ = {isa = PBXBuildFile; fileRef = 177B32572EDD2CBF00ACFA36 /* xxnetwork */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		179C12702ED2A729005654C3 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179C126E2ED2A729005654C3 /* main.swift */; };
 		17FC20062ED2AAC000A0FC0D /* install.sh in Resources */ = {isa = PBXBuildFile; fileRef = 17FC20052ED2AAC000A0FC0D /* install.sh */; };
-		17FC20082ED2AF5200A0FC0D /* Libbox.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17FC20072ED2AF5200A0FC0D /* Libbox.xcframework */; };
-		17FC204B2ED2B4A600A0FC0D /* ExtensionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FC20422ED2B26300A0FC0D /* ExtensionProvider.swift */; };
-		17FC204C2ED2B4A600A0FC0D /* Extension+RunBlocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FC20432ED2B26300A0FC0D /* Extension+RunBlocking.swift */; };
-		17FC204D2ED2B4A600A0FC0D /* ExtensionPlatformInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FC20412ED2B26300A0FC0D /* ExtensionPlatformInterface.swift */; };
-		17FC204E2ED2B4AD00A0FC0D /* WSParserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 17FC20492ED2B3D100A0FC0D /* WSParserManager.m */; };
-		17FC204F2ED2B4B200A0FC0D /* WSParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 17FC20472ED2B3D100A0FC0D /* WSParser.m */; };
 		17FC20572ED2B5B100A0FC0D /* geosite-geolocation-cn.srs in Resources */ = {isa = PBXBuildFile; fileRef = 17FC20552ED2B5B100A0FC0D /* geosite-geolocation-cn.srs */; };
 		17FC20582ED2B5B100A0FC0D /* geoip-cn.srs in Resources */ = {isa = PBXBuildFile; fileRef = 17FC20522ED2B5B100A0FC0D /* geoip-cn.srs */; };
 		17FC20592ED2B5B100A0FC0D /* global.xml in Resources */ = {isa = PBXBuildFile; fileRef = 17FC20562ED2B5B100A0FC0D /* global.xml */; };
@@ -65,15 +58,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		179C12642ED2A70A005654C3 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
 		17FC20032ED2A9E200A0FC0D /* Copy Plugins */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -101,18 +85,7 @@
 		1016F8C9A90A9468FA681DE2 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		1462D2CF35197BB9D8EE125F /* Pods_RunnerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RunnerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		177B32572EDD2CBF00ACFA36 /* xxnetwork */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = xxnetwork; sourceTree = "<group>"; };
-		179C12662ED2A70A005654C3 /* xxnetwork */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xxnetwork; sourceTree = BUILT_PRODUCTS_DIR; };
-		179C126E2ED2A729005654C3 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		17FC20052ED2AAC000A0FC0D /* install.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = install.sh; sourceTree = "<group>"; };
-		17FC20072ED2AF5200A0FC0D /* Libbox.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Libbox.xcframework; sourceTree = "<group>"; };
-		17FC20412ED2B26300A0FC0D /* ExtensionPlatformInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionPlatformInterface.swift; sourceTree = "<group>"; };
-		17FC20422ED2B26300A0FC0D /* ExtensionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionProvider.swift; sourceTree = "<group>"; };
-		17FC20432ED2B26300A0FC0D /* Extension+RunBlocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+RunBlocking.swift"; sourceTree = "<group>"; };
-		17FC20462ED2B3D100A0FC0D /* WSParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WSParser.h; sourceTree = "<group>"; };
-		17FC20472ED2B3D100A0FC0D /* WSParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WSParser.m; sourceTree = "<group>"; };
-		17FC20482ED2B3D100A0FC0D /* WSParserManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WSParserManager.h; sourceTree = "<group>"; };
-		17FC20492ED2B3D100A0FC0D /* WSParserManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WSParserManager.m; sourceTree = "<group>"; };
-		17FC204A2ED2B3E600A0FC0D /* Swift-Bridging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Swift-Bridging.h"; sourceTree = "<group>"; };
 		17FC20512ED2B5B100A0FC0D /* ai.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ai.xml; sourceTree = "<group>"; };
 		17FC20522ED2B5B100A0FC0D /* geoip-cn.srs */ = {isa = PBXFileReference; lastKnownFileType = file; path = "geoip-cn.srs"; sourceTree = "<group>"; };
 		17FC20532ED2B5B100A0FC0D /* geosite-cn.srs */ = {isa = PBXFileReference; lastKnownFileType = file; path = "geosite-cn.srs"; sourceTree = "<group>"; };
@@ -146,14 +119,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		179C12632ED2A70A005654C3 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				17FC20082ED2AF5200A0FC0D /* Libbox.xcframework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		331C80D2294CF70F00263BE5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -173,23 +138,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		179C126F2ED2A729005654C3 /* xxnetwork */ = {
-			isa = PBXGroup;
-			children = (
-				179C126E2ED2A729005654C3 /* main.swift */,
-				17FC20412ED2B26300A0FC0D /* ExtensionPlatformInterface.swift */,
-				17FC20422ED2B26300A0FC0D /* ExtensionProvider.swift */,
-				17FC20432ED2B26300A0FC0D /* Extension+RunBlocking.swift */,
-				17FC20462ED2B3D100A0FC0D /* WSParser.h */,
-				17FC20472ED2B3D100A0FC0D /* WSParser.m */,
-				17FC20482ED2B3D100A0FC0D /* WSParserManager.h */,
-				17FC20492ED2B3D100A0FC0D /* WSParserManager.m */,
-				17FC204A2ED2B3E600A0FC0D /* Swift-Bridging.h */,
-				17FC20072ED2AF5200A0FC0D /* Libbox.xcframework */,
-			);
-			path = xxnetwork;
-			sourceTree = "<group>";
-		};
 		17FC20502ED2B59200A0FC0D /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -228,7 +176,6 @@
 				33FAB671232836740065AC1E /* Runner */,
 				33CEB47122A05771004F2AC0 /* Flutter */,
 				331C80D6294CF71000263BE5 /* RunnerTests */,
-				179C126F2ED2A729005654C3 /* xxnetwork */,
 				33CC10EE2044A3C60003C045 /* Products */,
 				D73912EC22F37F3D000D13A0 /* Frameworks */,
 				F5FB49F65CA3AD6ED2DA8D67 /* Pods */,
@@ -240,7 +187,6 @@
 			children = (
 				33CC10ED2044A3C60003C045 /* ext_vpn.app */,
 				331C80D5294CF71000263BE5 /* RunnerTests.xctest */,
-				179C12662ED2A70A005654C3 /* xxnetwork */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -308,23 +254,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		179C12652ED2A70A005654C3 /* xxnetwork */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 179C126D2ED2A70A005654C3 /* Build configuration list for PBXNativeTarget "xxnetwork" */;
-			buildPhases = (
-				179C12622ED2A70A005654C3 /* Sources */,
-				179C12632ED2A70A005654C3 /* Frameworks */,
-				179C12642ED2A70A005654C3 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = xxnetwork;
-			productName = xxnetwork;
-			productReference = 179C12662ED2A70A005654C3 /* xxnetwork */;
-			productType = "com.apple.product-type.tool";
-		};
 		331C80D4294CF70F00263BE5 /* RunnerTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 331C80DE294CF71000263BE5 /* Build configuration list for PBXNativeTarget "RunnerTests" */;
@@ -378,9 +307,6 @@
 				LastUpgradeCheck = 1510;
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
-					179C12652ED2A70A005654C3 = {
-						CreatedOnToolsVersion = 26.1.1;
-					};
 					331C80D4294CF70F00263BE5 = {
 						CreatedOnToolsVersion = 14.0;
 						TestTargetID = 33CC10EC2044A3C60003C045;
@@ -417,7 +343,6 @@
 				33CC10EC2044A3C60003C045 /* Runner */,
 				331C80D4294CF70F00263BE5 /* RunnerTests */,
 				33CC111A2044C6BA0003C045 /* Flutter Assemble */,
-				179C12652ED2A70A005654C3 /* xxnetwork */,
 			);
 		};
 /* End PBXProject section */
@@ -552,19 +477,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		179C12622ED2A70A005654C3 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				17FC204B2ED2B4A600A0FC0D /* ExtensionProvider.swift in Sources */,
-				17FC204E2ED2B4AD00A0FC0D /* WSParserManager.m in Sources */,
-				17FC204F2ED2B4B200A0FC0D /* WSParser.m in Sources */,
-				17FC204C2ED2B4A600A0FC0D /* Extension+RunBlocking.swift in Sources */,
-				17FC204D2ED2B4A600A0FC0D /* ExtensionPlatformInterface.swift in Sources */,
-				179C12702ED2A729005654C3 /* main.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		331C80D1294CF70F00263BE5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -611,100 +523,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		179C126A2ED2A70A005654C3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3BX9U77G23;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				FRAMEWORK_SEARCH_PATHS = "";
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				HEADER_SEARCH_PATHS = "";
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_MODULE_VERIFIER_FLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "${PROJECT_DIR}/xxnetwork/Swift-Bridging.h";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		179C126B2ED2A70A005654C3 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3BX9U77G23;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				FRAMEWORK_SEARCH_PATHS = "";
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				HEADER_SEARCH_PATHS = "";
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12;
-				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_MODULE_VERIFIER_FLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "${PROJECT_DIR}/xxnetwork/Swift-Bridging.h";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		179C126C2ED2A70A005654C3 /* Profile */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3BX9U77G23;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				FRAMEWORK_SEARCH_PATHS = "";
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				HEADER_SEARCH_PATHS = "";
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12;
-				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_MODULE_VERIFIER_FLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "${PROJECT_DIR}/xxnetwork/Swift-Bridging.h";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Profile;
-		};
 		331C80DB294CF71000263BE5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 196DF98D745CBDE33FE2C072 /* Pods-RunnerTests.debug.xcconfig */;
@@ -1001,16 +819,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		179C126D2ED2A70A005654C3 /* Build configuration list for PBXNativeTarget "xxnetwork" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				179C126A2ED2A70A005654C3 /* Debug */,
-				179C126B2ED2A70A005654C3 /* Release */,
-				179C126C2ED2A70A005654C3 /* Profile */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		331C80DE294CF71000263BE5 /* Build configuration list for PBXNativeTarget "RunnerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

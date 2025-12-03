@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:xnetwork/xnetwork.dart';
@@ -158,6 +160,10 @@ class _HomePageState extends State<HomePage> {
                     IconButton(
                       icon: const Icon(Icons.save, color: Colors.blue),
                       onPressed: () async {
+                        var cc = await Xnetwork.parse(_configController.text);
+
+                        debugPrint("cc:${cc?.address}");
+
                         await Clipboard.setData(
                           ClipboardData(text: _configController.text),
                         );
