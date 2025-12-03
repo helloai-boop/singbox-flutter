@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:xnetwork/xnetwork.dart';
 import '../models/server_model.dart';
@@ -15,7 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool _isConnected = false;
   String _connectionStatus = 'Disconnected';
-  
+
   // Mock data
   final List<ServerModel> _servers = [
     ServerModel(
@@ -46,16 +48,12 @@ class _HomePageState extends State<HomePage> {
   ];
 
   // Config from main.dart
-  final String _vlessConfig = "vless://1d91601f-a63e-4500-9655-c4189d197816@206.82.4.34:443?encryption=none&security=reality&sni=www.cloudflare.com&fp=chrome&pbk=rEMZy3ADfCXxsyBbgDYNwIZ7Ai4IeSeRaiqU5gvWxgI&sid=12345678&type=tcp&headerType=none&host=www.cloudflare.com#%F0%9F%87%BA%F0%9F%87%B8%E7%BE%8E%E5%9B%BD";
+  final String _vlessConfig =
+      "vless://1d91601f-a63e-4500-9655-c4189d197816@206.82.4.34:443?encryption=none&security=reality&sni=www.cloudflare.com&fp=chrome&pbk=rEMZy3ADfCXxsyBbgDYNwIZ7Ai4IeSeRaiqU5gvWxgI&sid=12345678&type=tcp&headerType=none&host=www.cloudflare.com#%F0%9F%87%BA%F0%9F%87%B8%E7%BE%8E%E5%9B%BD";
 
   @override
   void initState() {
     super.initState();
-    // _checkPermission();
-  }
-
-  Future<void> _checkPermission() async {
-    await Xnetwork.getVPNPermission();
   }
 
   Future<void> _toggleConnection() async {
@@ -70,10 +68,9 @@ class _HomePageState extends State<HomePage> {
       // For now using the hardcoded one as per main.dart example or just a placeholder
       // The user request didn't provide dynamic config generation logic, so I'll use the one from main.dart
       // But to make it realistic, I'll pretend we are using the selected server.
-      
+
       var ok = await Xnetwork.start(_vlessConfig, true);
       debugPrint("start $ok");
-      
       setState(() {
         _isConnected = true;
         _connectionStatus = 'Connected';
@@ -83,26 +80,35 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final selectedServer = _servers.firstWhere((s) => s.isSelected, orElse: () => _servers.first);
+    final selectedServer = _servers.firstWhere(
+      (s) => s.isSelected,
+      orElse: () => _servers.first,
+    );
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5F6F8),
       appBar: AppBar(
         backgroundColor: const Color(0xFFF5F6F8),
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.qr_code_scanner, color: Colors.black),
-          onPressed: () {},
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.qr_code_scanner, color: Colors.black),
+        //   onPressed: () {},
+        // ),
         title: const Text(
-          'Yo Net',
+          'Sing-Box',
           style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.add_circle_outline, color: Colors.black),
-            onPressed: () {},
+            icon: Image.asset(
+              "assets/images/lock.heart.fill.png",
+              width: 25,
+              height: 25,
+            ),
+            onPressed: () async {
+              Xnetwork.getVPNPermission();
+            },
           ),
         ],
       ),
@@ -115,7 +121,10 @@ class _HomePageState extends State<HomePage> {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.grey.withOpacity(0.3), style: BorderStyle.solid), // Dashed in design
+              border: Border.all(
+                color: Colors.grey.withOpacity(0.3),
+                style: BorderStyle.solid,
+              ), // Dashed in design
             ),
             child: Row(
               children: [
@@ -138,11 +147,11 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () {},
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),
-          
+
           const SizedBox(height: 16),
 
           // Connection Card
@@ -170,20 +179,6 @@ class _HomePageState extends State<HomePage> {
 
           const SizedBox(height: 24),
 
-          // Speed Test & Route All
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildActionButton(Icons.speed, 'Speed Test', Colors.green),
-                _buildActionButton(Icons.public, 'Route All', Colors.green),
-              ],
-            ),
-          ),
-
-          const SizedBox(height: 16),
-
           // Server List
           Expanded(
             child: Container(
@@ -208,7 +203,11 @@ class _HomePageState extends State<HomePage> {
                           // Need to replace in list
                         }
                         // Simple toggle for demo
-                        final newServers = _servers.map((s) => s.copyWith(isSelected: s.id == server.id)).toList();
+                        final newServers = _servers
+                            .map(
+                              (s) => s.copyWith(isSelected: s.id == server.id),
+                            )
+                            .toList();
                         _servers.clear();
                         _servers.addAll(newServers);
                       });
@@ -221,43 +220,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.black54,
-        currentIndex: 0,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.vpn_key), label: 'Yo Net'),
-          BottomNavigationBarItem(icon: Icon(Icons.http), label: 'HTTP'),
-          BottomNavigationBarItem(icon: Icon(Icons.bug_report), label: 'Debug'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Setting'),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildActionButton(IconData icon, String label, Color color) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.circle,
-            border: Border.all(color: Colors.grey.withOpacity(0.2)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.05),
-                blurRadius: 5,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: Icon(icon, color: color, size: 24),
-        ),
-        const SizedBox(height: 8),
-        Text(label, style: const TextStyle(color: Colors.grey, fontSize: 12)),
-      ],
     );
   }
 }

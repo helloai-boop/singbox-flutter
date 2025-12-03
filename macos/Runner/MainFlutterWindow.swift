@@ -32,7 +32,7 @@ class MainFlutterWindow: NSWindow, Parser {
         let installAlert = NSAlert();
         installAlert.addButton(withTitle: "Install");
         installAlert.addButton(withTitle: "Quit");
-        installAlert.messageText = "xsing-box-exec needs to install a tool to /Library/Application Support/xxnetwork/ with administrator privileges to set system proxy quickly.\nOtherwise you need to type in the administrator password every time you change system proxy through xFuture."
+        installAlert.messageText = "sing-box needs to install a tool to /Library/Application Support/xxnetwork/xxnetwork with administrator privileges to set system proxy quickly.\nOtherwise you can't use sing-box"
         if installAlert.runModal() == .alertFirstButtonReturn {
             let script = "do shell script \"bash \(shellPath) \(drivePath)\" with administrator privileges";
             var error:NSDictionary?;
