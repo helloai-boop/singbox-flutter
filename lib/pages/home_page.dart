@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:xnetwork/xnetwork.dart';
 import '../models/server_model.dart';
+import '../services/server_storage.dart';
 import '../widgets/connection_card.dart';
 import '../widgets/server_item.dart';
 import '../widgets/connect_button.dart';
@@ -19,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   bool _isConnected = false;
   String _connectionStatus = 'Disconnected';
   late TextEditingController _configController;
+  final ServerStorage _serverStorage = ServerStorage();
 
   // Mock data
   final List<ServerModel> _servers = [
@@ -30,35 +32,38 @@ class _HomePageState extends State<HomePage> {
       type: 'vmess',
       flag: '🇸🇬',
       isSelected: true,
-    ),
-    ServerModel(
-      id: '2',
-      name: 'VIP-v2ray-Singapore 02',
-      address: 'apollo.apollogc.cloud',
-      port: 30008,
-      type: 'vmess',
-      flag: '🇸🇬',
-    ),
-    ServerModel(
-      id: '3',
-      name: 'VIP-v2ray-Taiwan 01',
-      address: 'apollo.apollogc.cloud',
-      port: 30009,
-      type: 'vmess',
-      flag: '🇨🇳',
+      url:
+          "vless://1d91601f-a63e-4500-9655-c4189d197816@206.82.4.34:443?encryption=none&security=reality&sni=www.cloudflare.com&fp=chrome&pbk=rEMZy3ADfCXxsyBbgDYNwIZ7Ai4IeSeRaiqU5gvWxgI&sid=12345678&type=tcp&headerType=none&host=www.cloudflare.com#%F0%9F%87%BA%F0%9F%87%B8%E7%BE%8E%E5%9B%BD",
     ),
   ];
 
-  // Config from main.dart
-  final String _vlessConfig =
-      "vless://1d91601f-a63e-4500-9655-c4189d197816@206.82.4.34:443?encryption=none&security=reality&sni=www.cloudflare.com&fp=chrome&pbk=rEMZy3ADfCXxsyBbgDYNwIZ7Ai4IeSeRaiqU5gvWxgI&sid=12345678&type=tcp&headerType=none&host=www.cloudflare.com#%F0%9F%87%BA%F0%9F%87%B8%E7%BE%8E%E5%9B%BD";
-
-  ServerModel? selectedServer;
+  ServerModel selectedServer = ServerModel(
+    id: '1',
+    name: 'VIP-v2ray-Singapore 01',
+    address: 'apollo.apollogc.cloud',
+    port: 30007,
+    type: 'vmess',
+    flag: '🇸🇬',
+    isSelected: true,
+    url:
+        "vless://1d91601f-a63e-4500-9655-c4189d197816@206.82.4.34:443?encryption=none&security=reality&sni=www.cloudflare.com&fp=chrome&pbk=rEMZy3ADfCXxsyBbgDYNwIZ7Ai4IeSeRaiqU5gvWxgI&sid=12345678&type=tcp&headerType=none&host=www.cloudflare.com#%F0%9F%87%BA%F0%9F%87%B8%E7%BE%8E%E5%9B%BD",
+  );
 
   @override
   void initState() {
     super.initState();
-    _configController = TextEditingController(text: _vlessConfig);
+    _configController = TextEditingController(text: selectedServer.url);
+    _loadServers();
+  }
+
+  Future<void> _loadServers() async {
+    final storedServers = await _serverStorage.loadServers();
+    if (storedServers.isNotEmpty) {
+      setState(() {
+        _servers.clear();
+        _servers.addAll(storedServers);
+      });
+    }
   }
 
   @override
@@ -77,11 +82,7 @@ class _HomePageState extends State<HomePage> {
     } else {
       // Use the selected server's URL if available, otherwise fallback to the input text (though input text is usually for adding new ones)
       // If the selected server has a URL, use it.
-      String configUrl = selectedServer?.url ?? "";
-      if (configUrl.isEmpty) {
-        configUrl = _vlessConfig; // Fallback to default if everything is empty
-      }
-
+      String configUrl = selectedServer.url!;
       var ok = await Xnetwork.start(configUrl, true);
       debugPrint("start $ok");
       setState(() {
@@ -183,6 +184,7 @@ class _HomePageState extends State<HomePage> {
                           setState(() {
                             _servers.add(newServer);
                           });
+                          _serverStorage.saveServers(_servers);
 
                           if (mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -266,7 +268,12 @@ class _HomePageState extends State<HomePage> {
                         _servers.addAll(newServers);
                       });
                     },
-                    onDelete: () {},
+                    onDelete: () {
+                      setState(() {
+                        _servers.removeWhere((s) => s.id == server.id);
+                      });
+                      _serverStorage.saveServers(_servers);
+                    },
                   );
                 },
               ),
