@@ -242,7 +242,16 @@ class Xnetwork {
       runInShell: true,
     );
     final completer = Completer<String>();
-    process.stdout.transform(const Utf8Decoder()).listen(debug);
+    process.stdout
+        .transform(const Utf8Decoder())
+        .listen(
+          (json) {
+            completer.complete(json);
+          },
+          onError: (e) {
+            completer.complete("");
+          },
+        );
     process.stderr
         .transform(const Utf8Decoder())
         .listen(
