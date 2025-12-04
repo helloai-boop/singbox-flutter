@@ -7,7 +7,7 @@ import Libbox
 @objc class AppDelegate: FlutterAppDelegate, Parser {
     func start(url: String, global: Bool, parameters: [String : AnyHashable]) -> Bool {
         WSParserManager.shared().isGlobalMode = global;
-        let json = LibboxParse(url)
+        let json = LibboxParse(url, false)
         if json.count == 0 {
             return false;
         }
@@ -17,7 +17,7 @@ import Libbox
     }
     
     func parse(url: String) -> String {
-        LibboxParse(url)
+        LibboxParse(url, true)
     }
     
     func stop() {
@@ -26,6 +26,8 @@ import Libbox
     
     func getVPNPermission(completion: @escaping (Bool) -> Void) {
         WSParserManager.shared().getVPNPermission(completion)
+//        WSParserManager.shared().echo();
+//        completion(true);
     }
     
     override func application(

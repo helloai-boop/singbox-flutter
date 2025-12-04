@@ -82,8 +82,8 @@
         "auto_detect_interface": true,
         "rules": [
             {
-                "protocol": ["quic"],
-                "outbound": "block"
+                "protocol": "dns",
+                "outbound": "dns_out"
             },
             {
                 "type": "logical",

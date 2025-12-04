@@ -667,7 +667,7 @@ FOUNDATION_EXPORT LibboxCommandClient* _Nullable LibboxNewStandaloneCommandClien
 
 FOUNDATION_EXPORT LibboxWIFIState* _Nullable LibboxNewWIFIState(NSString* _Nullable wifiSSID, NSString* _Nullable wifiBSSID);
 
-FOUNDATION_EXPORT NSString* _Nonnull LibboxParse(NSString* _Nullable uri);
+FOUNDATION_EXPORT NSString* _Nonnull LibboxParse(NSString* _Nullable uri, BOOL remark);
 
 FOUNDATION_EXPORT LibboxImportRemoteProfile* _Nullable LibboxParseRemoteProfileImportLink(NSString* _Nullable importLink, NSError* _Nullable* _Nullable error);
 

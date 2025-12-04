@@ -69,9 +69,6 @@ typedef enum : NSUInteger {
 /// 断开连接
 -(void)disconnect;
 
-/// 获取当前自定义 DNS
--(NSArray <NSString *> *)GetDNS;
-
 /// 向扩展进程发送活跃检查，DEBU 时使用
 -(void)echo;
 

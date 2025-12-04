@@ -39,16 +39,9 @@ typedef void(^YHSetupCompletion)(NETunnelProviderManager *manager);
 @implementation WSParserManager
 {
     NETunnelProviderManager *_providerManager;
-    NSTimer *_durationTimer;
-    NSTimer *_pingTimer;
-    NSMutableArray *_dns;
-    dispatch_queue_t _worker;
     NSURL *_containerURL;
     NSURL *_workingURL;
     NSURL *_cacheURL;
-    
-    NSMutableDictionary *_callbackInvoked;
-    
 }
 +(instancetype)sharedManager{
     static WSParserManager *__manager__;
@@ -69,63 +62,10 @@ typedef void(^YHSetupCompletion)(NETunnelProviderManager *manager);
     return _cacheURL;
 }
 
--(NSURL *)getDefaultURL {
-    NSURL *url = [NSURL URLWithString:@"https://gz-z.s3.ap-southeast-1.amazonaws.com/GeoLite2-Country.mmdb"];
-    return url;
-}
-
-+(NSString *)mmdb {
-    NSURL *url = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:__apple_ground_container_identifier__];
-    url = [url URLByAppendingPathComponent:@"Library/mmdb"];
-    NSString *dest = [NSString stringWithFormat:@"%@/country.mmdb", url.path];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:dest]) {
-        return dest;
-    }
-    return nil;
-}
-
-
-+(void)setVPNServerAddress:(NSString *)address {
-    __apple_vpn_server_address__ = address;
-}
-
-+(void)setVPNLocalizedDescription:(NSString *)description {
-    __apple_vpn_localized_description__ = description;
-}
-
-+(void)setGroupID:(NSString *)groupId {
-    __apple_ground_container_identifier__ = groupId;
-}
-
--(void)deleteDnsServer:(NSString *)dns {
-    [_dns removeObject:dns];
-    [_userDefaults setObject:_dns forKey:@"dns"];
-    [_userDefaults synchronize];
-}
-
-
--(void)addDnsServer:(NSString *)dns {
-    [_dns addObject:dns];
-    [_userDefaults setObject:_dns forKey:@"dns"];
-    [_userDefaults synchronize];
-}
-
--(NSArray <NSString *> *)GetDNS {
-    return [_dns copy];
-}
 
 -(void)configure {
-    _dns = [@[@"8.8.4.4", @"8.8.8.8"] mutableCopy];
     _userDefaults = [[NSUserDefaults alloc] initWithSuiteName:__apple_ground_container_identifier__];
-    NSArray *dns = [_userDefaults objectForKey:@"dns"];
-    if (dns) {
-        _dns = [dns mutableCopy];
-        [_userDefaults setObject:dns forKey:@"dns"];
-    }
-    _callbackInvoked = @{}.mutableCopy;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectionStatusDidChangeNotification:) name:NEVPNStatusDidChangeNotification object:nil];
-    [_userDefaults addObserver:self forKeyPath:@"notifier" options:(NSKeyValueObservingOptionNew) context:nil];
-    _worker = dispatch_queue_create("com.helloc.pinger.queue", DISPATCH_QUEUE_CONCURRENT);
     
     _containerURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:__apple_ground_container_identifier__];
     
@@ -133,32 +73,38 @@ typedef void(^YHSetupCompletion)(NETunnelProviderManager *manager);
     _cacheURL = [_containerURL URLByAppendingPathComponent:@"Caches" isDirectory:true];
     _workingURL = [_cacheURL URLByAppendingPathComponent:@"Working" isDirectory:true];
     [[NSFileManager defaultManager] createDirectoryAtURL:_workingURL withIntermediateDirectories:YES attributes:nil error:nil];
+    
+    
+    
+    NSString *geo = [NSBundle.mainBundle pathForResource:@"geoip-cn" ofType:@"srs"];
+    
+    NSURL *x = [_workingURL URLByAppendingPathComponent:@"geoip-cn.srs"];
+    if (![NSFileManager.defaultManager fileExistsAtPath:x.path]) {
+        [NSFileManager.defaultManager copyItemAtPath:geo toPath:x.path error:nil];
+    }
+    
+    geo = [NSBundle.mainBundle pathForResource:@"geosite-cn" ofType:@"srs"];
+    x = [_workingURL URLByAppendingPathComponent:@"geosite-cn.srs"];
+    if (![NSFileManager.defaultManager fileExistsAtPath:x.path]) {
+        [NSFileManager.defaultManager copyItemAtPath:geo toPath:x.path error:nil];
+    }
+    
+    geo = [NSBundle.mainBundle pathForResource:@"geosite-geolocation-!cn" ofType:@"srs"];
+    x = [_workingURL URLByAppendingPathComponent:@"geosite-geolocation-!cn.srs"];
+    if (![NSFileManager.defaultManager fileExistsAtPath:x.path]) {
+        [NSFileManager.defaultManager copyItemAtPath:geo toPath:x.path error:nil];
+    }
+    
+    geo = [NSBundle.mainBundle pathForResource:@"geosite-geolocation-cn" ofType:@"srs"];
+    x = [_workingURL URLByAppendingPathComponent:@"geosite-geolocation-cn.srs"];
+    if (![NSFileManager.defaultManager fileExistsAtPath:x.path]) {
+        [NSFileManager.defaultManager copyItemAtPath:geo toPath:x.path error:nil];
+    }
 }
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-//    NSDictionary <NSString *, NSNumber *>*vinfo = [_userDefaults objectForKey:@"vinfo"];
-//    if (_rsp) {
-//        [vinfo enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSNumber * _Nonnull obj, BOOL * _Nonnull stop) {
-//            if (_callbackInvoked[key]) {
-//                return;
-//            }
-//            _callbackInvoked[key] = @(true);
-//            _rsp(key, obj.intValue);
-//        }];
-//    }
-}
 
 -(NSURL *)sharedDir {
     return _containerURL;
-}
-
--(NSString *)saveGlobalConfiguration:(NSString *)json {
-    NSMutableDictionary *proxy = [[NSJSONSerialization JSONObjectWithData:[json dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil] mutableCopy];
-    if (!proxy) {
-        return nil;
-    }
-    [_userDefaults setObject:json forKey:@"kApplicationConfiguration"];
-    return json;
 }
 
 -(NSString *)save:(NSString *)json {
@@ -190,35 +136,6 @@ typedef void(^YHSetupCompletion)(NETunnelProviderManager *manager);
     return jsonx;
 }
 
--(NSString *)saveForWebView:(NSString *)json {
-    
-    NSMutableDictionary *proxy = [[NSJSONSerialization JSONObjectWithData:[json dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil] mutableCopy];
-    BOOL isGlobalMode = self.isGlobalMode;
-    NSString *type = [NSString stringWithFormat:@"%@", proxy[@"type"]];
-    if ([type isEqualToString:@"shadowsocks"]) {
-        if (proxy[@"uot"]) {
-            proxy[@"udp_over_tcp"] = proxy[@"uot"];
-        }
-        else {
-            proxy[@"udp_over_tcp"] = [NSNumber numberWithBool:true];
-        }
-    }
-    
-    NSString *ai = [NSString stringWithContentsOfURL:[[NSBundle mainBundle] URLForResource:isGlobalMode ? @"global_webview":@"ai_webview" withExtension:@"json"] encoding:NSUTF8StringEncoding error:nil];
-    NSData *aiBody = [ai dataUsingEncoding:NSUTF8StringEncoding];
-    
-    NSMutableDictionary *configuration = [[NSJSONSerialization JSONObjectWithData:aiBody options:NSJSONReadingMutableContainers error:nil] mutableCopy];
-    
-    NSMutableArray *outbounds = [configuration[@"outbounds"] mutableCopy];
-    
-    outbounds[0] = proxy;
-    configuration[@"outbounds"] = outbounds;
-    
-    NSData *cfgData = [NSJSONSerialization dataWithJSONObject:configuration options:NSJSONWritingPrettyPrinted error:nil];
-    NSString *jsonx = [[NSString alloc] initWithData:cfgData encoding:NSUTF8StringEncoding];
-    [_userDefaults setObject:jsonx forKey:@"kApplicationConfiguration"];
-    return jsonx;
-}
 
 -(void)setupVPNManager:(YHSetupCompletion)completion {
     [NETunnelProviderManager loadAllFromPreferencesWithCompletionHandler:^(NSArray<NETunnelProviderManager *> * _Nullable managers, NSError * _Nullable error) {
@@ -468,16 +385,23 @@ typedef void(^YHSetupCompletion)(NETunnelProviderManager *manager);
 }
 
 -(void)echo {
-    NETunnelProviderSession *connection = (NETunnelProviderSession *)_providerManager.connection;
-    if (!connection) return;
-    NSDictionary *echo = @{@"type":@1};
-    NSError *error;
-    [connection sendProviderMessage:[NSJSONSerialization dataWithJSONObject:echo options:(NSJSONWritingPrettyPrinted) error:nil] returnError:&error responseHandler:^(NSData * _Nullable responseData) {
-        NSString *x = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-        NSLog(@"%@", x);
+    
+    [self setupVPNManager:^(NETunnelProviderManager *manager) {
+        
+        NETunnelProviderSession *connection = (NETunnelProviderSession *)manager.connection;
+        if (!connection) return;
+        NSDictionary *echo = @{@"type":@1};
+        NSError *error;
+        [connection sendProviderMessage:[NSJSONSerialization dataWithJSONObject:echo options:(NSJSONWritingPrettyPrinted) error:nil] returnError:&error responseHandler:^(NSData * _Nullable responseData) {
+            NSString *x = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+            NSLog(@"%@", x);
+        }];
+        if (error) {
+            NSLog(@"echo sendProviderMessage: %@", error);
+        }
+        
     }];
-    if (error) {
-        NSLog(@"echo sendProviderMessage: %@", error);
-    }
+    
+   
 }
 @end

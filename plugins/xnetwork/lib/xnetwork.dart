@@ -38,6 +38,12 @@ class Xnetwork {
     bool isGlobalMode, {
     Map<String, dynamic> parameters = const {},
   }) async {
+    if (Platform.isIOS) {
+      var authed = await getVPNPermission();
+      if (!authed) {
+        return false;
+      }
+    }
     if (Platform.isWindows) {
       return await startWindows(url, isGlobalMode, parameters: parameters);
     } else if (Platform.isMacOS) {

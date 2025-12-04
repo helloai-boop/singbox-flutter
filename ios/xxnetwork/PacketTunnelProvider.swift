@@ -57,6 +57,7 @@ open class PacketTunnelProvider: NEPacketTunnelProvider {
         Task {
             await startService()
         }
+        completionHandler(nil);
     }
 
 
