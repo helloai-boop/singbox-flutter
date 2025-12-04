@@ -30,13 +30,18 @@ class MainActivity : FlutterActivity(), Parser {
     }
 
     override fun start(url: String?, global: Boolean): Boolean {
-        val json = Libbox.parse(url)
+        val json = Libbox.parse(url, false)
         if (json.isEmpty()) {
             return false;
         }
         val xjson = WSParserManager.sharedManager().save(json, global)
         WSParserManager.sharedManager().startTunnel(xjson)
         return true;
+    }
+
+    override fun parse(url: String): String {
+        val json = Libbox.parse(url, true)
+        return json;
     }
 
     override fun stop(): Boolean {

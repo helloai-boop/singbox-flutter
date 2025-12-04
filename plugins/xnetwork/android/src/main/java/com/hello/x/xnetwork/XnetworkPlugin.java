@@ -59,6 +59,13 @@ public class XnetworkPlugin implements FlutterPlugin, MethodCallHandler {
                 result.success(ok);
                 break;
             }
+            case "parse": {
+                Map<String, Object> arguments = (Map<String, Object>) call.arguments;
+                String url = (String) arguments.get("url");
+                String ok = parser.parse(url);
+                result.success(ok);
+                break;
+            }
             case "stop": {
                 parser.stop();
                 result.success(true);
