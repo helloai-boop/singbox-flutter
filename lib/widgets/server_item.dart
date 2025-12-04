@@ -18,38 +18,79 @@ class ServerItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.all(12),
+        margin: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          border: server.isSelected
-              ? Border.all(color: Colors.black54, style: BorderStyle.solid, width: 1) // Dashed border simulation needed? Design shows dashed for selected.
-              // For simplicity using solid or we can use a custom painter for dashed.
-              // Let's stick to simple border for now, maybe dashed if I have time.
+          gradient: server.isSelected
+              ? LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.blue.shade50,
+                    Colors.white,
+                  ],
+                )
               : null,
+          color: server.isSelected ? null : Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          border: server.isSelected
+              ? Border.all(
+                  color: Colors.blue.withOpacity(0.3),
+                  width: 2,
+                )
+              : Border.all(
+                  color: Colors.grey.withOpacity(0.1),
+                  width: 1,
+                ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 5,
-              offset: const Offset(0, 2),
+              color: server.isSelected
+                  ? Colors.blue.withOpacity(0.15)
+                  : Colors.black.withOpacity(0.04),
+              blurRadius: server.isSelected ? 20 : 12,
+              offset: const Offset(0, 4),
+              spreadRadius: 0,
             ),
+            if (server.isSelected)
+              BoxShadow(
+                color: Colors.blue.withOpacity(0.08),
+                blurRadius: 30,
+                offset: const Offset(0, 8),
+                spreadRadius: -5,
+              ),
           ],
         ),
         child: Row(
           children: [
             // Flag
             Container(
-              width: 40,
-              height: 30,
+              width: 48,
+              height: 36,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(4),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.grey.shade100,
+                    Colors.grey.shade200,
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 4,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
               ),
-              child: Text(server.flag, style: const TextStyle(fontSize: 20)),
+              child: Text(
+                server.flag,
+                style: const TextStyle(fontSize: 24),
+              ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: 16),
             // Info
             Expanded(
               child: Column(
@@ -57,26 +98,49 @@ class ServerItem extends StatelessWidget {
                 children: [
                   Text(
                     server.name,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: server.isSelected ? Colors.blue.shade900 : Colors.black87,
+                      letterSpacing: 0.2,
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 6),
                   Row(
                     children: [
-                      Text(
-                        server.type,
-                        style: const TextStyle(
-                          color: Colors.green,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 3,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.green.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(6),
+                          border: Border.all(
+                            color: Colors.green.withOpacity(0.3),
+                            width: 1,
+                          ),
+                        ),
+                        child: Text(
+                          server.type,
+                          style: const TextStyle(
+                            color: Color(0xFF27AE60),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 11,
+                            letterSpacing: 0.5,
+                          ),
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: Text(
                           server.address,
-                          style: const TextStyle(color: Colors.grey, fontSize: 12),
+                          style: TextStyle(
+                            color: Colors.grey.shade600,
+                            fontSize: 12,
+                          ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -88,9 +152,15 @@ class ServerItem extends StatelessWidget {
             ),
             // Delete button
             if (server.isSelected)
-              IconButton(
-                icon: const Icon(Icons.remove_circle_outline, color: Colors.red),
-                onPressed: onDelete,
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.red.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                  icon: const Icon(Icons.delete_outline, color: Colors.red, size: 22),
+                  onPressed: onDelete,
+                ),
               ),
           ],
         ),

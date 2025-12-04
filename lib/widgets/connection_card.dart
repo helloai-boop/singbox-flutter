@@ -21,15 +21,35 @@ class ConnectionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Colors.white,
+            Colors.grey.shade50,
+          ],
+        ),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(
+          color: Colors.white.withOpacity(0.8),
+          width: 1.5,
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
+            color: Colors.black.withOpacity(0.06),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+            spreadRadius: 0,
+          ),
+          BoxShadow(
+            color: status == 'Connected' 
+                ? Colors.green.withOpacity(0.08)
+                : Colors.grey.withOpacity(0.03),
+            blurRadius: 30,
             offset: const Offset(0, 4),
+            spreadRadius: -5,
           ),
         ],
       ),
@@ -39,28 +59,34 @@ class ConnectionCard extends StatelessWidget {
           Column(
             children: [
               _buildRow('Remark:', remark, isBold: true),
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
               _buildRow('Address:', address),
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
               _buildRow('Port:', port),
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
               _buildRow(
                 'Status:',
                 status,
-                color: status == 'Connected' ? Colors.green : Colors.grey,
+                color: status == 'Connected' ? const Color(0xFF27AE60) : Colors.grey,
               ),
             ],
           ),
 
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              protocol,
-              style: TextStyle(
-                color: Colors.grey.withOpacity(0.3),
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic,
+          Positioned(
+            right: -10,
+            top: 0,
+            bottom: 0,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                protocol,
+                style: TextStyle(
+                  color: Colors.grey.withOpacity(0.15),
+                  fontSize: 48,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                  letterSpacing: -2,
+                ),
               ),
             ),
           ),
