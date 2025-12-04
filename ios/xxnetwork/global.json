@@ -1,0 +1,128 @@
+{
+    "log": {
+        "level": "info",
+        "output": "box.log"
+    },
+    "dns": {
+        "servers": [
+            {
+                "tag": "dns_proxy",
+                "address": "tcp://8.8.8.8:53",
+                "address_strategy": "prefer_ipv4",
+                "strategy": "prefer_ipv4",
+                "detour": "proxy"
+            },
+            {
+                "tag": "dns_block",
+                "address": "rcode://refused"
+            }
+        ],
+        "rules": [
+            {
+                "outbound": "any",
+                "server": "dns_proxy"
+            }
+        ],
+        "final": "dns_proxy",
+        "strategy": "prefer_ipv4",
+        "disable_cache": false,
+        "disable_expire": false,
+        "independent_cache": false,
+        "reverse_mapping": false,
+        "fakeip": {}
+    },
+    "inbounds": [
+        {
+            "type": "tun",
+            "tag": "tun-in",
+            "interface_name": "utun12",
+            "mtu": 9000,
+            "auto_route": true,
+            "strict_route": true,
+            "stack": "gvisor",
+            "sniff": true,
+            "inet4_address": "172.19.0.1/30"
+        }
+    ],
+    "outbounds": [
+        {
+            "flow": "",
+            "server": "176.97.70.43",
+            "server_port": 443,
+            "tag": "proxy",
+            "tls": {
+                "enabled": true,
+                "insecure": false,
+                "server_name": "8123et.cainiaohub.xyz"
+            },
+            "transport": {
+                "headers": {
+                    "Host": "8123et.cainiaohub.xyz"
+                },
+                "path": "/81574b6b-c9d7-44a0-b83d-dad56e8cb529",
+                "type": "ws"
+            },
+            "type": "vless",
+            "uuid": "9d70ca97-c46c-4870-a010-b573158a1401"
+        },
+        {
+            "type": "direct",
+            "tag": "direct"
+        },
+        {
+            "type": "block",
+            "tag": "block"
+        },
+        {
+            "type": "dns",
+            "tag": "dns_out"
+        }
+    ],
+    "route": {
+        "auto_detect_interface": true,
+        "rules": [
+            {
+                "protocol": ["quic"],
+                "outbound": "block"
+            },
+            {
+                "type": "logical",
+                "mode": "and",
+                "rules": [
+                    {
+                        "rule_set": "geoip-cn",
+                        "invert": true
+                    },
+                    {
+                        "rule_set": "geosite-geolocation-!cn"
+                    }
+                ],
+                "outbound": "proxy"
+            },
+            {
+                "rule_set": "geoip-cn",
+                "outbound": "proxy"
+            }
+        ],
+        "rule_set": [
+            {
+                "type": "local",
+                "tag": "geosite-geolocation-!cn",
+                "format": "binary",
+                "path": "geosite-geolocation-!cn.srs"
+            },
+            {
+                "tag": "geosite-cn",
+                "type": "local",
+                "format": "binary",
+                "path": "geosite-cn.srs"
+            },
+            {
+                "tag": "geoip-cn",
+                "type": "local",
+                "format": "binary",
+                "path": "geoip-cn.srs"
+            }
+        ]
+    }
+}

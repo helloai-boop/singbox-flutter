@@ -42,4 +42,10 @@ class MethodChannelXnetwork extends XnetworkPlatform {
     final ok = await methodChannel.invokeMethod<bool>('stop');
     return ok ?? false;
   }
+
+  @override
+  Future<String> parse(String url) async {
+    final ok = await methodChannel.invokeMethod<String>('parse', {"url": url});
+    return ok ?? "";
+  }
 }

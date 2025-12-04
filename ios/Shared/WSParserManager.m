@@ -21,7 +21,7 @@
 
 static NSString *__apple_vpn_server_address__ = @"com.helloc.vpn.x.work";
 static NSString *__apple_vpn_localized_description__ = @"Z Proxy";
-static NSString *__apple_ground_container_identifier__ = @"group.net.hello.x.ios";
+static NSString *__apple_ground_container_identifier__ = @"group.com.example.x.vpn";
 
 typedef void(^YHSetupCompletion)(NETunnelProviderManager *manager);
 
@@ -116,7 +116,6 @@ typedef void(^YHSetupCompletion)(NETunnelProviderManager *manager);
 
 -(void)configure {
     _dns = [@[@"8.8.4.4", @"8.8.8.8"] mutableCopy];
-    _passwords = @[];
     _userDefaults = [[NSUserDefaults alloc] initWithSuiteName:__apple_ground_container_identifier__];
     NSArray *dns = [_userDefaults objectForKey:@"dns"];
     if (dns) {
@@ -321,22 +320,6 @@ typedef void(^YHSetupCompletion)(NETunnelProviderManager *manager);
 }
 -(void)changeURL:(NSString *)uri {
     [self changeURL:uri force:NO];
-}
-
--(void)setShareable:(BOOL)shareable {
-    _shareable = shareable;
-    if (_connectedURL == nil) {
-        return;
-    }
-    if (self.status != YDVPNStatusConnected) {
-        return;
-    }
-    [self reenableManager:^(NETunnelProviderManager *manager) {
-        if (!manager){
-            return;
-        }
-        [self connectInternal:7 open:NO];
-    }];
 }
 
 -(void)changeURL:(NSString *)uri force:(BOOL)force{

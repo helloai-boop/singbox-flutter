@@ -1,19 +1,23 @@
 import Flutter
 import UIKit
 import xnetwork
-import Libtech
+import Libbox
 
 @main
 @objc class AppDelegate: FlutterAppDelegate, Parser {
     func start(url: String, global: Bool, parameters: [String : AnyHashable]) -> Bool {
         WSParserManager.shared().isGlobalMode = global;
-        let json = LibtechParse(url)
+        let json = LibboxParse(url)
         if json.count == 0 {
             return false;
         }
         WSParserManager.shared().save(json);
         WSParserManager.shared().connect(url);
         return true;
+    }
+    
+    func parse(url: String) -> String {
+        LibboxParse(url)
     }
     
     func stop() {

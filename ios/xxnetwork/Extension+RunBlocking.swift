@@ -1,5 +1,5 @@
 import Foundation
-import Libtech
+import Libbox
 import NetworkExtension
 
 func runBlocking<T>(_ block: @escaping () async -> T) -> T {

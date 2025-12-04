@@ -9,9 +9,16 @@
 /* Begin PBXBuildFile section */
 		029512C06217E630747B4D8F /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2922DC14A5C15EF113018C /* Pods_Runner.framework */; };
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
+		17392AE02EE15E93006C3664 /* geosite-geolocation-cn.srs in Resources */ = {isa = PBXBuildFile; fileRef = 17392ADE2EE15E93006C3664 /* geosite-geolocation-cn.srs */; };
+		17392AE12EE15E93006C3664 /* global.json in Resources */ = {isa = PBXBuildFile; fileRef = 17392ADF2EE15E93006C3664 /* global.json */; };
+		17392AE22EE15E93006C3664 /* geoip-cn.srs in Resources */ = {isa = PBXBuildFile; fileRef = 17392ADB2EE15E93006C3664 /* geoip-cn.srs */; };
+		17392AE32EE15E93006C3664 /* geosite-cn.srs in Resources */ = {isa = PBXBuildFile; fileRef = 17392ADC2EE15E93006C3664 /* geosite-cn.srs */; };
+		17392AE42EE15E93006C3664 /* geosite-geolocation-!cn.srs in Resources */ = {isa = PBXBuildFile; fileRef = 17392ADD2EE15E93006C3664 /* geosite-geolocation-!cn.srs */; };
+		17392AE52EE15E93006C3664 /* ai.json in Resources */ = {isa = PBXBuildFile; fileRef = 17392ADA2EE15E93006C3664 /* ai.json */; };
+		17392AE72EE15FFD006C3664 /* Libbox.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17392AE62EE15FFD006C3664 /* Libbox.xcframework */; };
+		17392AE82EE16008006C3664 /* Libbox.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17392AE62EE15FFD006C3664 /* Libbox.xcframework */; };
 		17809B8D2ED1E08F0019E894 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17809B8C2ED1E08F0019E894 /* NetworkExtension.framework */; };
 		17809B952ED1E08F0019E894 /* xxnetwork.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 17809B8B2ED1E08F0019E894 /* xxnetwork.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		17809BB12ED1E35C0019E894 /* Libtech.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17809BA92ED1E35C0019E894 /* Libtech.xcframework */; };
 		17809BF32ED1E4E20019E894 /* WSParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 17809BF02ED1E4950019E894 /* WSParser.m */; };
 		17809BF42ED1E4E20019E894 /* WSParserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 17809BF22ED1E4950019E894 /* WSParserManager.m */; };
 		179C11852ED1F072005654C3 /* Extension+RunBlocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179C11802ED1F072005654C3 /* Extension+RunBlocking.swift */; };
@@ -19,7 +26,6 @@
 		179C11BC2ED1F1FE005654C3 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179C11BA2ED1F1FE005654C3 /* PacketTunnelProvider.swift */; };
 		179C11C72ED20E87005654C3 /* WSParserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 17809BF22ED1E4950019E894 /* WSParserManager.m */; };
 		179C11C82ED20E87005654C3 /* WSParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 17809BF02ED1E4950019E894 /* WSParser.m */; };
-		179C11CB2ED20FCF005654C3 /* Libtech.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17809BA92ED1E35C0019E894 /* Libtech.xcframework */; };
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
@@ -73,11 +79,17 @@
 /* Begin PBXFileReference section */
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
+		17392ADA2EE15E93006C3664 /* ai.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ai.json; sourceTree = "<group>"; };
+		17392ADB2EE15E93006C3664 /* geoip-cn.srs */ = {isa = PBXFileReference; lastKnownFileType = file; path = "geoip-cn.srs"; sourceTree = "<group>"; };
+		17392ADC2EE15E93006C3664 /* geosite-cn.srs */ = {isa = PBXFileReference; lastKnownFileType = file; path = "geosite-cn.srs"; sourceTree = "<group>"; };
+		17392ADD2EE15E93006C3664 /* geosite-geolocation-!cn.srs */ = {isa = PBXFileReference; lastKnownFileType = file; path = "geosite-geolocation-!cn.srs"; sourceTree = "<group>"; };
+		17392ADE2EE15E93006C3664 /* geosite-geolocation-cn.srs */ = {isa = PBXFileReference; lastKnownFileType = file; path = "geosite-geolocation-cn.srs"; sourceTree = "<group>"; };
+		17392ADF2EE15E93006C3664 /* global.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = global.json; sourceTree = "<group>"; };
+		17392AE62EE15FFD006C3664 /* Libbox.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Libbox.xcframework; sourceTree = "<group>"; };
 		17809B8B2ED1E08F0019E894 /* xxnetwork.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = xxnetwork.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		17809B8C2ED1E08F0019E894 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		17809B9C2ED1E0B40019E894 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		17809BA82ED1E35C0019E894 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		17809BA92ED1E35C0019E894 /* Libtech.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Libtech.xcframework; sourceTree = "<group>"; };
 		17809BAB2ED1E35C0019E894 /* xxnetwork.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = xxnetwork.entitlements; sourceTree = "<group>"; };
 		17809BEF2ED1E4950019E894 /* WSParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WSParser.h; sourceTree = "<group>"; };
 		17809BF02ED1E4950019E894 /* WSParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WSParser.m; sourceTree = "<group>"; };
@@ -116,7 +128,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				17809B8D2ED1E08F0019E894 /* NetworkExtension.framework in Frameworks */,
-				17809BB12ED1E35C0019E894 /* Libtech.xcframework in Frameworks */,
+				17392AE72EE15FFD006C3664 /* Libbox.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,7 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				029512C06217E630747B4D8F /* Pods_Runner.framework in Frameworks */,
-				179C11CB2ED20FCF005654C3 /* Libtech.xcframework in Frameworks */,
+				17392AE82EE16008006C3664 /* Libbox.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,10 +156,16 @@
 			isa = PBXGroup;
 			children = (
 				17809BA82ED1E35C0019E894 /* Info.plist */,
-				17809BA92ED1E35C0019E894 /* Libtech.xcframework */,
 				179C11802ED1F072005654C3 /* Extension+RunBlocking.swift */,
 				179C11B92ED1F1FE005654C3 /* ExtensionPlatformInterface.swift */,
+				17392AE62EE15FFD006C3664 /* Libbox.xcframework */,
 				179C11BA2ED1F1FE005654C3 /* PacketTunnelProvider.swift */,
+				17392ADA2EE15E93006C3664 /* ai.json */,
+				17392ADB2EE15E93006C3664 /* geoip-cn.srs */,
+				17392ADC2EE15E93006C3664 /* geosite-cn.srs */,
+				17392ADD2EE15E93006C3664 /* geosite-geolocation-!cn.srs */,
+				17392ADE2EE15E93006C3664 /* geosite-geolocation-cn.srs */,
+				17392ADF2EE15E93006C3664 /* global.json */,
 				17809BF82ED1E50C0019E894 /* Network-Bridging-Header.h */,
 				17809BAB2ED1E35C0019E894 /* xxnetwork.entitlements */,
 			);
@@ -359,6 +377,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17392AE02EE15E93006C3664 /* geosite-geolocation-cn.srs in Resources */,
+				17392AE12EE15E93006C3664 /* global.json in Resources */,
+				17392AE22EE15E93006C3664 /* geoip-cn.srs in Resources */,
+				17392AE32EE15E93006C3664 /* geosite-cn.srs in Resources */,
+				17392AE42EE15E93006C3664 /* geosite-geolocation-!cn.srs in Resources */,
+				17392AE52EE15E93006C3664 /* ai.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,9 +475,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -733,6 +761,7 @@
 				DEVELOPMENT_TEAM = 3BX9U77G23;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "sing-box";
 				IPHONEOS_DEPLOYMENT_TARGET = 16;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -918,6 +947,7 @@
 				DEVELOPMENT_TEAM = 3BX9U77G23;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "sing-box";
 				IPHONEOS_DEPLOYMENT_TARGET = 16;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -943,6 +973,7 @@
 				DEVELOPMENT_TEAM = 3BX9U77G23;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "sing-box";
 				IPHONEOS_DEPLOYMENT_TARGET = 16;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

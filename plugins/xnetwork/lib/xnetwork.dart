@@ -60,6 +60,8 @@ class Xnetwork {
       json = await parseWindows(url);
     } else if (Platform.isMacOS) {
       json = await parseMac(url);
+    } else {
+      json = await XnetworkPlatform.instance.parse(url);
     }
     try {
       Map<String, dynamic> jsonMap = jsonDecode(json);

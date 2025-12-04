@@ -50,13 +50,6 @@ typedef enum : NSUInteger {
 /// - Parameter completion: 完成回调
 -(void)getVPNPermission:(YDManagerCompletion)completion;
 
-/// mmdb 数据库
-@property (nonatomic, strong, readonly, class, nullable)NSString *mmdb;
-
-/// 代理共享
-@property (nonatomic)BOOL shareable;
-
-
 /// 当前连接状态
 @property (nonatomic, readonly)YDVPNStatus status;
 
@@ -68,9 +61,6 @@ typedef enum : NSUInteger {
 
 /// 是否全局模式，启动 VPN 或者切换节点前设置有效
 @property (nonatomic)BOOL isGlobalMode;
-
-/// 用户名和密码信息
-@property (nonatomic, strong)NSArray <NSDictionary *> *passwords;
 
 /// 开始连接
 /// - Parameter url: 节点 URL
@@ -86,11 +76,6 @@ typedef enum : NSUInteger {
 -(void)echo;
 
 -(NSString *)save:(NSString *)json;
-
--(NSString *)saveGlobalConfiguration:(NSString *)json;
-
-@property (nonatomic, copy, readonly)NSString *logDir;
-
 
 @end
 

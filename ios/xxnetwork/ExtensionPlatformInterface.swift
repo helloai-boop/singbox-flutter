@@ -1,12 +1,12 @@
 import Foundation
-import Libtech
+import Libbox
 import NetworkExtension
 import UserNotifications
 #if canImport(CoreWLAN)
     import CoreWLAN
 #endif
 
-public class ExtensionPlatformInterface: NSObject, LibtechPlatformInterfaceProtocol, LibtechCommandServerHandlerProtocol {
+public class ExtensionPlatformInterface: NSObject, LibboxPlatformInterfaceProtocol, LibboxCommandServerHandlerProtocol {
     private let tunnel: PacketTunnelProvider
     private var networkSettings: NEPacketTunnelNetworkSettings?
 
@@ -14,13 +14,13 @@ public class ExtensionPlatformInterface: NSObject, LibtechPlatformInterfaceProto
         self.tunnel = tunnel
     }
 
-    public func openTun(_ options: LibtechTunOptionsProtocol?, ret0_: UnsafeMutablePointer<Int32>?) throws {
+    public func openTun(_ options: LibboxTunOptionsProtocol?, ret0_: UnsafeMutablePointer<Int32>?) throws {
         try runBlocking { [self] in
             try await openTun0(options, ret0_)
         }
     }
 
-    private func openTun0(_ options: LibtechTunOptionsProtocol?, _ ret0_: UnsafeMutablePointer<Int32>?) async throws {
+    private func openTun0(_ options: LibboxTunOptionsProtocol?, _ ret0_: UnsafeMutablePointer<Int32>?) async throws {
         guard let options else {
             throw NSError(domain: "nil options", code: 0)
         }
@@ -180,7 +180,7 @@ public class ExtensionPlatformInterface: NSObject, LibtechPlatformInterfaceProto
             return
         }
 
-        let tunFdFromLoop = LibtechGetTunnelFileDescriptor()
+        let tunFdFromLoop = LibboxGetTunnelFileDescriptor()
         if tunFdFromLoop != -1 {
             ret0_.pointee = tunFdFromLoop
         } else {
@@ -228,7 +228,7 @@ public class ExtensionPlatformInterface: NSObject, LibtechPlatformInterfaceProto
 
     private var nwMonitor: NWPathMonitor? = nil
 
-    public func startDefaultInterfaceMonitor(_ listener: LibtechInterfaceUpdateListenerProtocol?) throws {
+    public func startDefaultInterfaceMonitor(_ listener: LibboxInterfaceUpdateListenerProtocol?) throws {
         guard let listener else {
             return
         }
@@ -246,7 +246,7 @@ public class ExtensionPlatformInterface: NSObject, LibtechPlatformInterfaceProto
         semaphore.wait()
     }
 
-    private func onUpdateDefaultInterface(_ listener: LibtechInterfaceUpdateListenerProtocol, _ path: Network.NWPath) {
+    private func onUpdateDefaultInterface(_ listener: LibboxInterfaceUpdateListenerProtocol, _ path: Network.NWPath) {
         if path.status == .unsatisfied {
             listener.updateDefaultInterface("", interfaceIndex: -1, isExpensive: false, isConstrained: false)
         } else {
@@ -255,12 +255,12 @@ public class ExtensionPlatformInterface: NSObject, LibtechPlatformInterfaceProto
         }
     }
 
-    public func closeDefaultInterfaceMonitor(_: LibtechInterfaceUpdateListenerProtocol?) throws {
+    public func closeDefaultInterfaceMonitor(_: LibboxInterfaceUpdateListenerProtocol?) throws {
         nwMonitor?.cancel()
         nwMonitor = nil
     }
 
-    public func getInterfaces() throws -> LibtechNetworkInterfaceIteratorProtocol {
+    public func getInterfaces() throws -> LibboxNetworkInterfaceIteratorProtocol {
         guard let nwMonitor else {
             throw NSError(domain: "NWMonitor not started", code: 0)
         }
@@ -268,40 +268,40 @@ public class ExtensionPlatformInterface: NSObject, LibtechPlatformInterfaceProto
         if path.status == .unsatisfied {
             return networkInterfaceArray([])
         }
-        var interfaces: [LibtechNetworkInterface] = []
+        var interfaces: [LibboxNetworkInterface] = []
         for it in path.availableInterfaces {
-            let interface = LibtechNetworkInterface()
+            let interface = LibboxNetworkInterface()
             interface.name = it.name
             interface.index = Int32(it.index)
             switch it.type {
             case .wifi:
-                interface.type = LibtechInterfaceTypeWIFI
+                interface.type = LibboxInterfaceTypeWIFI
             case .cellular:
-                interface.type = LibtechInterfaceTypeCellular
+                interface.type = LibboxInterfaceTypeCellular
             case .wiredEthernet:
-                interface.type = LibtechInterfaceTypeEthernet
+                interface.type = LibboxInterfaceTypeEthernet
             default:
-                interface.type = LibtechInterfaceTypeOther
+                interface.type = LibboxInterfaceTypeOther
             }
             interfaces.append(interface)
         }
         return networkInterfaceArray(interfaces)
     }
 
-    class networkInterfaceArray: NSObject, LibtechNetworkInterfaceIteratorProtocol {
-        private var iterator: IndexingIterator<[LibtechNetworkInterface]>
-        init(_ array: [LibtechNetworkInterface]) {
+    class networkInterfaceArray: NSObject, LibboxNetworkInterfaceIteratorProtocol {
+        private var iterator: IndexingIterator<[LibboxNetworkInterface]>
+        init(_ array: [LibboxNetworkInterface]) {
             iterator = array.makeIterator()
         }
 
-        private var nextValue: LibtechNetworkInterface? = nil
+        private var nextValue: LibboxNetworkInterface? = nil
 
         func hasNext() -> Bool {
             nextValue = iterator.next()
             return nextValue != nil
         }
 
-        func next() -> LibtechNetworkInterface? {
+        func next() -> LibboxNetworkInterface? {
             nextValue
         }
     }
@@ -326,7 +326,7 @@ public class ExtensionPlatformInterface: NSObject, LibtechPlatformInterfaceProto
         tunnel.reasserting = false
     }
 
-    public func readWIFIState() -> LibtechWIFIState? {
+    public func readWIFIState() -> LibboxWIFIState? {
         #if os(iOS)
             let network = runBlocking {
                 await NEHotspotNetwork.fetchCurrent()
@@ -334,7 +334,7 @@ public class ExtensionPlatformInterface: NSObject, LibtechPlatformInterfaceProto
             guard let network else {
                 return nil
             }
-            return LibtechWIFIState(network.ssid, wifiBSSID: network.bssid)!
+            return LibboxWIFIState(network.ssid, wifiBSSID: network.bssid)!
         #elseif os(macOS)
             guard let interface = CWWiFiClient.shared().interface() else {
                 return nil
@@ -345,7 +345,7 @@ public class ExtensionPlatformInterface: NSObject, LibtechPlatformInterfaceProto
             guard let bssid = interface.bssid() else {
                 return nil
             }
-            return LibtechWIFIState(ssid, wifiBSSID: bssid)!
+            return LibboxWIFIState(ssid, wifiBSSID: bssid)!
         #else
             return nil
         #endif
@@ -362,8 +362,8 @@ public class ExtensionPlatformInterface: NSObject, LibtechPlatformInterfaceProto
         tunnel.postServiceClose()
     }
 
-    public func getSystemProxyStatus() -> LibtechSystemProxyStatus? {
-        let status = LibtechSystemProxyStatus()
+    public func getSystemProxyStatus() -> LibboxSystemProxyStatus? {
+        let status = LibboxSystemProxyStatus()
         guard let networkSettings else {
             return status
         }
@@ -403,7 +403,7 @@ public class ExtensionPlatformInterface: NSObject, LibtechPlatformInterfaceProto
         networkSettings = nil
     }
 
-    public func send(_ notification: LibtechNotification?) throws {
+    public func send(_ notification: LibboxNotification?) throws {
         #if !os(tvOS)
             guard let notification else {
                 return

@@ -4,6 +4,7 @@ import UIKit
 public protocol Parser {
     func start(url:String, global:Bool, parameters:[String:AnyHashable]) -> Bool;
     func stop();
+    func parse(url:String) -> String;
     func getVPNPermission(completion: @escaping (Bool) -> Void);
 }
 
@@ -32,6 +33,11 @@ public class XnetworkPlugin: NSObject, FlutterPlugin {
         case "stop":
             Self.parser.stop();
             result(true);
+            
+        case "parse":
+            guard let dict = call.arguments as? [String:AnyHashable] else { return result(""); }
+            guard let url = dict["url"] as? String else { return result(""); }
+            result(Self.parser.parse(url: url));
             
         case "getVPNPermission":
             Self.parser.getVPNPermission(completion: result);

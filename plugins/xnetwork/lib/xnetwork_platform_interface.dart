@@ -39,6 +39,10 @@ abstract class XnetworkPlatform extends PlatformInterface {
     throw UnimplementedError('start() has not been implemented.');
   }
 
+  Future<String> parse(String url) async {
+    throw UnimplementedError('start() has not been implemented.');
+  }
+
   Future<bool> stop() async {
     throw UnimplementedError('stop() has not been implemented.');
   }
