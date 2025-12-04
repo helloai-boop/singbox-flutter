@@ -7,6 +7,7 @@ class ServerModel {
   final String status;
   final String flag; // Emoji or asset path
   final bool isSelected;
+  final String? url;
 
   ServerModel({
     required this.id,
@@ -17,6 +18,7 @@ class ServerModel {
     this.status = 'Idle',
     required this.flag,
     this.isSelected = false,
+    this.url,
   });
 
   ServerModel copyWith({
@@ -28,6 +30,7 @@ class ServerModel {
     String? status,
     String? flag,
     bool? isSelected,
+    String? url,
   }) {
     return ServerModel(
       id: id ?? this.id,
@@ -38,6 +41,7 @@ class ServerModel {
       status: status ?? this.status,
       flag: flag ?? this.flag,
       isSelected: isSelected ?? this.isSelected,
+      url: url ?? this.url,
     );
   }
 }

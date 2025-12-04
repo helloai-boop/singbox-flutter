@@ -53,6 +53,8 @@ class _HomePageState extends State<HomePage> {
   final String _vlessConfig =
       "vless://1d91601f-a63e-4500-9655-c4189d197816@206.82.4.34:443?encryption=none&security=reality&sni=www.cloudflare.com&fp=chrome&pbk=rEMZy3ADfCXxsyBbgDYNwIZ7Ai4IeSeRaiqU5gvWxgI&sid=12345678&type=tcp&headerType=none&host=www.cloudflare.com#%F0%9F%87%BA%F0%9F%87%B8%E7%BE%8E%E5%9B%BD";
 
+  ServerModel? selectedServer;
+
   @override
   void initState() {
     super.initState();
@@ -73,12 +75,14 @@ class _HomePageState extends State<HomePage> {
         _connectionStatus = 'Disconnected';
       });
     } else {
-      // In a real app, we would use the selected server's config
-      // For now using the hardcoded one as per main.dart example or just a placeholder
-      // The user request didn't provide dynamic config generation logic, so I'll use the one from main.dart
-      // But to make it realistic, I'll pretend we are using the selected server.
+      // Use the selected server's URL if available, otherwise fallback to the input text (though input text is usually for adding new ones)
+      // If the selected server has a URL, use it.
+      String configUrl = selectedServer?.url ?? "";
+      if (configUrl.isEmpty) {
+        configUrl = _vlessConfig; // Fallback to default if everything is empty
+      }
 
-      var ok = await Xnetwork.start(_configController.text, true);
+      var ok = await Xnetwork.start(configUrl, true);
       debugPrint("start $ok");
       setState(() {
         _isConnected = true;
@@ -158,21 +162,45 @@ class _HomePageState extends State<HomePage> {
                     IconButton(
                       icon: const Icon(Icons.save, color: Colors.blue),
                       onPressed: () async {
-                        var cc = await Xnetwork.parse(_configController.text);
+                        final url = _configController.text;
+                        if (url.isEmpty) return;
 
-                        debugPrint("cc:${cc?.address}");
-
-                        await Clipboard.setData(
-                          ClipboardData(text: _configController.text),
-                        );
-                        if (mounted) {
-                          // ignore: use_build_context_synchronously
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Copied to clipboard'),
-                              duration: Duration(seconds: 1),
-                            ),
+                        var node = await Xnetwork.parse(url);
+                        if (node != null) {
+                          final newServer = ServerModel(
+                            id: DateTime.now().millisecondsSinceEpoch
+                                .toString(),
+                            name: node.remark.isNotEmpty
+                                ? node.remark
+                                : 'New Server',
+                            address: node.address,
+                            port: node.port,
+                            type: node.scheme,
+                            flag: '🌐', // Default flag
+                            url: node.url,
                           );
+
+                          setState(() {
+                            _servers.add(newServer);
+                          });
+
+                          if (mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Server added successfully'),
+                                duration: Duration(seconds: 1),
+                              ),
+                            );
+                          }
+                        } else {
+                          if (mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Failed to parse URL'),
+                                duration: Duration(seconds: 1),
+                              ),
+                            );
+                          }
                         }
                       },
                     ),
