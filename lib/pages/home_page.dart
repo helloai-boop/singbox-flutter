@@ -168,6 +168,22 @@ class _HomePageState extends State<HomePage> {
 
                         var node = await Xnetwork.parse(url);
                         if (node != null) {
+                          // Check for duplicates
+                          final isDuplicate = _servers.any(
+                            (s) => s.url == node.url,
+                          );
+                          if (isDuplicate) {
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Server already exists'),
+                                  duration: Duration(seconds: 1),
+                                ),
+                              );
+                            }
+                            return;
+                          }
+
                           final newServer = ServerModel(
                             id: DateTime.now().millisecondsSinceEpoch
                                 .toString(),
