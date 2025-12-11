@@ -135,7 +135,14 @@ class Xnetwork {
     // );
 
     // 使用 shell 执行
-    final arguments = ['run', '-D', exeDir, "-u", url, "-g", "$isGlobalMode"];
+    final arguments = [
+      'run',
+      '-D',
+      exeDir,
+      "-u",
+      url,
+      "--global=$isGlobalMode",
+    ];
     await Process.run(
       'powershell',
       [
@@ -200,8 +207,7 @@ class Xnetwork {
         resourcesPath.path,
         "-u",
         url,
-        "-g",
-        "$isGlobalMode",
+        "--global=$isGlobalMode",
       ], // 示例参数
       runInShell: true,
     );
