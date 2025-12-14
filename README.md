@@ -1,6 +1,6 @@
 # singbox
 
-A new Flutter project.
+A new sing-box Flutter project.
 
 ## Getting Started
 
@@ -13,6 +13,24 @@ This approach makes the client ideal for developers who want a quick integration
 Additionally, on **Windows**, the application must be launched with **administrator privileges**, as this is required to enable and operate in **TUN mode**. Without admin rights, the VPN tunnel cannot be properly established.
 
 Whether you're distributing VPN services, testing sing-box deployments, or building your own VPN product, this Flutter-based client offers a lightweight, convenient, and highly portable solution powered by the performance and reliability of sing-box.
+
+
+## Features
+
+- ✅ **VPN Connection Management** - Start, stop, and monitor VPN connections
+- ✅ **Real-time Status Updates** - Stream-based status monitoring
+- ✅ **Traffic Statistics** - Upload/download speeds, data usage, connection counts
+- ✅ **Simple URL** - Simple URL for sing-box
+
+## Platform Support
+
+| Platform | Support | Sing-Box Version |
+|----------|---------|------------------|
+| Android  | ✅      | 1.11.15          |
+| iOS      | ✅      | 1.11.15 |
+| macOS    | ✅      | 1.11.15 |
+| Windows  | ✅      | 1.11.15 |
+| Linux    | ✅      | 1.11.15 |
 
 
 just 3 interface
