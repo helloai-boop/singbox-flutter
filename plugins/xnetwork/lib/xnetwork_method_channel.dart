@@ -28,6 +28,7 @@ class MethodChannelXnetwork extends XnetworkPlatform {
     bool isGlobalMode, {
     Map<String, dynamic> parameters = const {},
   }) async {
+    await stop();
     final ok = await methodChannel.invokeMethod<bool>('start', {
       "url": url,
       "global": isGlobalMode,

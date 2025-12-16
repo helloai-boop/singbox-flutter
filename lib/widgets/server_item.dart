@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import '../models/server_model.dart';
 
@@ -19,29 +21,20 @@ class ServerItem extends StatelessWidget {
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.only(bottom: 16),
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           gradient: server.isSelected
               ? LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [
-                    Colors.blue.shade50,
-                    Colors.white,
-                  ],
+                  colors: [Colors.blue.shade50, Colors.white],
                 )
               : null,
           color: server.isSelected ? null : Colors.white,
           borderRadius: BorderRadius.circular(20),
           border: server.isSelected
-              ? Border.all(
-                  color: Colors.blue.withOpacity(0.3),
-                  width: 2,
-                )
-              : Border.all(
-                  color: Colors.grey.withOpacity(0.1),
-                  width: 1,
-                ),
+              ? Border.all(color: Colors.blue.withOpacity(0.3), width: 2)
+              : Border.all(color: Colors.black.withOpacity(0.02), width: 1),
           boxShadow: [
             BoxShadow(
               color: server.isSelected
@@ -71,10 +64,7 @@ class ServerItem extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [
-                    Colors.grey.shade100,
-                    Colors.grey.shade200,
-                  ],
+                  colors: [Colors.grey.shade100, Colors.grey.shade200],
                 ),
                 borderRadius: BorderRadius.circular(8),
                 boxShadow: [
@@ -85,10 +75,7 @@ class ServerItem extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Text(
-                server.flag,
-                style: const TextStyle(fontSize: 24),
-              ),
+              child: Text(server.flag, style: const TextStyle(fontSize: 24)),
             ),
             const SizedBox(width: 16),
             // Info
@@ -101,7 +88,9 @@ class ServerItem extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
-                      color: server.isSelected ? Colors.blue.shade900 : Colors.black87,
+                      color: server.isSelected
+                          ? Colors.blue.shade900
+                          : Colors.black87,
                       letterSpacing: 0.2,
                     ),
                     maxLines: 1,
@@ -158,7 +147,11 @@ class ServerItem extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: IconButton(
-                  icon: const Icon(Icons.delete_outline, color: Colors.red, size: 22),
+                  icon: const Icon(
+                    Icons.delete_outline,
+                    color: Colors.red,
+                    size: 22,
+                  ),
                   onPressed: onDelete,
                 ),
               ),
